@@ -17,11 +17,10 @@ UNDERLINE_TEXT=$'\033[4m'
 
 
 clear
-# Welcome message
-
 
 # Instruction 1
-
+echo -e "${YELLOW_TEXT}${BOLD_TEXT}Step 1: Creating redact-request.json file for de-identification.${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}This file contains the data to be redacted and the configuration for the de-identification process.${RESET_FORMAT}"
 
 cat > redact-request.json <<EOF_END
 {
@@ -50,7 +49,8 @@ cat > redact-request.json <<EOF_END
 EOF_END
 
 # Instruction 2
-
+echo -e "${YELLOW_TEXT}${BOLD_TEXT}Step 2: Sending de-identification request to DLP API.${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}This step sends the content of redact-request.json to the DLP API for de-identification.${RESET_FORMAT}"
 
 curl -s \
   -H "Authorization: Bearer $(gcloud auth print-access-token)" \
@@ -59,11 +59,13 @@ curl -s \
   -d @redact-request.json -o redact-response.txt
 
 # Copy response to Google Cloud Storage
+echo -e "${GREEN_TEXT}${BOLD_TEXT}Uploading redact-response.txt to Google Cloud Storage...${RESET_FORMAT}"
 
 gsutil cp redact-response.txt gs://$DEVSHELL_PROJECT_ID-redact
 
 # Instruction 3
-
+echo -e "${YELLOW_TEXT}${BOLD_TEXT}Step 3: Creating structured_data_template.${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}This template defines how structured data should be de-identified.${RESET_FORMAT}"
 
 cat > template.json <<EOF_END
 {
@@ -105,7 +107,8 @@ cat > template.json <<EOF_END
 EOF_END
 
 # Send template to API
-
+echo -e "${YELLOW_TEXT}${BOLD_TEXT}Step 4: Sending structured_data_template to DLP API...${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}This step sends the structured data template to the DLP API.${RESET_FORMAT}"
 
 curl -s \
 -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
@@ -114,7 +117,8 @@ https://dlp.googleapis.com/v2/projects/$DEVSHELL_PROJECT_ID/deidentifyTemplates 
 -d @template.json
 
 # Instruction 4
-
+echo -e "${YELLOW_TEXT}${BOLD_TEXT}Step 5: Creating unstructured_data_template.${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}This template defines how unstructured data should be de-identified.${RESET_FORMAT}"
 
 cat > template.json <<'EOF_END'
 {
@@ -154,7 +158,8 @@ cat > template.json <<'EOF_END'
 EOF_END
 
 # Send template to API
-
+echo -e "${YELLOW_TEXT}${BOLD_TEXT}Step 6: Sending unstructured_data_template to DLP API...${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}This step sends the unstructured data template to the DLP API.${RESET_FORMAT}"
 
 curl -s \
 -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
@@ -165,19 +170,21 @@ https://dlp.googleapis.com/v2/projects/$DEVSHELL_PROJECT_ID/deidentifyTemplates 
 # Output the URLs for the templates
 echo -e "${GREEN_TEXT}${BOLD_TEXT}Structured Data Template URL:${RESET_FORMAT}"
 
-echo -e "${BLUE_TEXT}${UNDERLINE_TEXT}https://console.cloud.google.com/security/sensitive-data-protection/projects/$DEVSHELL_PROJECT_ID/locations/global/deidentifyTemplates/structured_data_template/edit?project=$DEVSHELL_PROJECT_ID${RESET_FORMAT}"
+echo -e "${BLUE_TEXT}https://console.cloud.google.com/security/sensitive-data-protection/projects/$DEVSHELL_PROJECT_ID/locations/global/deidentifyTemplates/structured_data_template/edit?project=$DEVSHELL_PROJECT_ID${RESET_FORMAT}"
 
 echo -e "${GREEN_TEXT}${BOLD_TEXT}Unstructured Data Template URL:${RESET_FORMAT}"
 
-echo -e "${BLUE_TEXT}${UNDERLINE_TEXT}https://console.cloud.google.com/security/sensitive-data-protection/projects/$DEVSHELL_PROJECT_ID/locations/global/deidentifyTemplates/unstructured_data_template/edit?project=$DEVSHELL_PROJECT_ID${RESET_FORMAT}"
+echo -e "${BLUE_TEXT}https://console.cloud.google.com/security/sensitive-data-protection/projects/$DEVSHELL_PROJECT_ID/locations/global/deidentifyTemplates/unstructured_data_template/edit?project=$DEVSHELL_PROJECT_ID${RESET_FORMAT}"
 
 # Display the message with colors
-echo -e "${CYAN_TEXT}${BOLD_TEXT}Now follow next steps from the video carefully.${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}${BOLD_TEXT}Now follow steps in video.${RESET_FORMAT}"
 echo
 
 read -p "${MAGENTA_TEXT}${BOLD_TEXT}Press Enter after completing above steps...${RESET_FORMAT}"
 
 # Instruction 5
+echo -e "${YELLOW_TEXT}${BOLD_TEXT}Step 7: Creating job-configuration.json file for DLP job.${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}This file contains the configuration for the DLP job, including the infoTypes to inspect and the actions to take.${RESET_FORMAT}"
 
 cat > job-configuration.json << EOM
 {
@@ -487,7 +494,8 @@ cat > job-configuration.json << EOM
 EOM
 
 # Step 2: Send job configuration to DLP API
-
+echo -e "${YELLOW_TEXT}${BOLD_TEXT}Step 8: Sending job configuration to DLP API...${RESET_FORMAT}"
+echo -e "${CYAN_TEXT}This step sends the job configuration to the DLP API to create a new job trigger.${RESET_FORMAT}"
 
 curl -s \
 -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
@@ -496,9 +504,11 @@ https://dlp.googleapis.com/v2/projects/$DEVSHELL_PROJECT_ID/locations/global/job
 -d @job-configuration.json
 
 # Step 3: Wait for job trigger activation
+echo -e "${BLUE_TEXT}${BOLD_TEXT}Step 9: Waiting 15 seconds before activating the job trigger...${RESET_FORMAT}"
 sleep 15
 
 # Step 4: Activate the job trigger
+echo -e "${BLUE_TEXT}${BOLD_TEXT}Step 10: Activating the job trigger...${RESET_FORMAT}"
 
 curl --request POST \
   -H "Content-Type: application/json" \
