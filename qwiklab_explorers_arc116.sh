@@ -165,11 +165,11 @@ https://dlp.googleapis.com/v2/projects/$DEVSHELL_PROJECT_ID/deidentifyTemplates 
 # Output the URLs for the templates
 echo -e "${GREEN_TEXT}${BOLD_TEXT}Structured Data Template URL:${RESET_FORMAT}"
 
-echo -e "${BLUE_TEXT}https://console.cloud.google.com/security/sensitive-data-protection/projects/$DEVSHELL_PROJECT_ID/locations/global/deidentifyTemplates/structured_data_template/edit?project=$DEVSHELL_PROJECT_ID${RESET_FORMAT}"
+echo -e "${BLUE_TEXT}${UNDERLINE_TEXT}https://console.cloud.google.com/security/sensitive-data-protection/projects/$DEVSHELL_PROJECT_ID/locations/global/deidentifyTemplates/structured_data_template/edit?project=$DEVSHELL_PROJECT_ID${RESET_FORMAT}"
 
 echo -e "${GREEN_TEXT}${BOLD_TEXT}Unstructured Data Template URL:${RESET_FORMAT}"
 
-echo -e "${BLUE_TEXT}https://console.cloud.google.com/security/sensitive-data-protection/projects/$DEVSHELL_PROJECT_ID/locations/global/deidentifyTemplates/unstructured_data_template/edit?project=$DEVSHELL_PROJECT_ID${RESET_FORMAT}"
+echo -e "${BLUE_TEXT}${UNDERLINE_TEXT}https://console.cloud.google.com/security/sensitive-data-protection/projects/$DEVSHELL_PROJECT_ID/locations/global/deidentifyTemplates/unstructured_data_template/edit?project=$DEVSHELL_PROJECT_ID${RESET_FORMAT}"
 
 # Display the message with colors
 echo -e "${CYAN_TEXT}${BOLD_TEXT}Now follow next steps from the video carefully.${RESET_FORMAT}"
