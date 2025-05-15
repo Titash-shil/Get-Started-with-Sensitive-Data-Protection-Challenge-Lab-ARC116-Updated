@@ -11,11 +11,11 @@
 
 
 ```
-curl -LO raw.githubusercontent.com/Titash-shil/Dataplex-Qwik-Start---Console-GSP1143/refs/heads/main/qwiklab_explorers_gsp1143.sh
+curl -LO raw.githubusercontent.com/Titash-shil/Get-Started-with-Sensitive-Data-Protection-Challenge-Lab-ARC116-Updated/refs/heads/main/qwiklab_explorers_arc116.sh
 
-sudo chmod +x qwiklab_explorers_gsp1143.sh
+sudo chmod +x qwiklab_explorers_arc116.sh
 
-./qwiklab_explorers_gsp1143.sh
+./qwiklab_explorers_arc116.sh
 ```
 
 ---
